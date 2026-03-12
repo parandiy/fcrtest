@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
 
   app:
@@ -15,8 +13,8 @@ services:
       - redis
     networks:
       - app
-    ports:
-      - "8080:9000"  # php-fpm через nginx проксі
+    #ports:
+     # - "8083:9000"  # php-fpm через nginx проксі
     environment:
       DB_CONNECTION: mysql
       DB_HOST: mysql
