@@ -10,14 +10,15 @@ RUN apt-get update && apt-get install -y \
 
 RUN pecl install redis && docker-php-ext-enable redis
 
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-#CMD bash -c "
-#composer install &&
-#php artisan key:generate &&
-#php artisan migrate --force &&
-#php-fpm
-#"
+COPY ./src /var/www
+
+RUN composer install
+
+RUN php artisan key:generate && \
+    php artisan migrate --force && \
+    php-fpm
 
 RUN mkdir -p storage/framework/cache \
     storage/framework/views \
